@@ -1,9 +1,10 @@
 export default {
     providers: [
       {
-       
-        domain: process.env.NEXT_PUBLIC_CLERK_FRONTEND_API_URL,
-        applicationID: "convex",
+        // Must be the Clerk JWT issuer, e.g. "https://vast-cat-63.clerk.accounts.dev"
+        domain: process.env.CLERK_JWT_ISSUER_DOMAIN,
+        // Must match your Clerk JWT Template audience; default is often "convex"
+        applicationID:"convex",
       },
     ]
   };

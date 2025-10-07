@@ -1,6 +1,6 @@
 'use client'
 
-import { SignInButton, UserButton } from '@clerk/nextjs'
+import { SignInButton, UserButton, useUser, useAuth } from '@clerk/nextjs'
 import { Authenticated, Unauthenticated } from 'convex/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -10,7 +10,19 @@ import { Button } from './ui/button'
 const Header = () => {
     const pathname = usePathname()
     const isDashboard = pathname.startsWith("/dashboard")
-
+    const { user, isLoaded } = useUser()
+    const { signOut } = useAuth()
+    
+    const handleSignOut = async () => {
+        try {
+            await signOut()
+            // Force page refresh to clear any cached state
+            window.location.reload()
+        } catch (error) {
+            console.error("Sign out error:", error)
+        }
+    }
+    
     return (
         <header className='flex items-center justify-between px-4 h-15 sm:px-6'>
             <Link href={"/dashboard"} className="font-medium uppercase">ChatBook</Link>
@@ -22,14 +34,21 @@ const Header = () => {
                             <Button variant="outline">Dashboard</Button>
                         </Link>
                     )}
-                    <UserButton/>
+                    <Button 
+                        variant="outline" 
+                        onClick={handleSignOut}
+                        className="mr-2"
+                    >
+                        Sign Out
+                    </Button>
+                    <UserButton />
                 </Authenticated>
 
                 <Unauthenticated>
                     <SignInButton
-                    mode='modal'
-                    forceRedirectUrl={"/dashboard"}
-                    signUpForceRedirectUrl={"/dashboard"}
+                        mode='modal'
+                        forceRedirectUrl={"/dashboard"}
+                        signUpForceRedirectUrl={"/dashboard"}
                     >
                         <Button variant={'outline'}>Sign In</Button>
                     </SignInButton>
