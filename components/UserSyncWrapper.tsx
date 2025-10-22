@@ -9,16 +9,12 @@ import NextTopLoader from "nextjs-toploader"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 
-
-
 const UserSyncWrapper = ({ children }: { children: React.ReactNode }) => {
   const { user, isLoaded: isUserLoaded } = useUser()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   const createOrUpdateUser = useMutation(api.users.upsertUser)
-
-
 
 
   const userSync = useCallback((async () => {
@@ -47,9 +43,9 @@ const UserSyncWrapper = ({ children }: { children: React.ReactNode }) => {
         }
       )
       // Avoid reconnecting the same user repeatedly
-      if ((streamClient as any).userID === user.id) {
-        return
-      }
+      // if ((streamClient as any).userID === user.id) {
+      //   return
+      // }
       await streamClient.connectUser({
         id: user.id,
         name:
@@ -86,6 +82,9 @@ const UserSyncWrapper = ({ children }: { children: React.ReactNode }) => {
     else {
       disconnectUser()
       setIsLoading(false)
+    }
+    return ()=>{
+      disconnectUser()
     }
   }, [isUserLoaded, user, userSync, disconnectUser])
 
