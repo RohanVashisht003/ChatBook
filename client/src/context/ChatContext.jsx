@@ -28,8 +28,8 @@ export const ChatProvider = ({ children }) => {
     const getMessages = async (userId) => {
         try{
             const {data} = await axios.get(`/api/messages/${userId}`)
-            if(data.success){
-                setMessages(data.messages)
+            if(data){
+                setMessages(data)
             }
         }
         catch(error){

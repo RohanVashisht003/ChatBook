@@ -84,7 +84,7 @@ const ChatContainer = () => {
                     >
                         {msg.image ? (
                             <img
-                                src={assets?.image}
+                                src={msg?.image}
                                 alt=""
                                 className="max-w-[230px] border border-gray-700 rounded-lg"
                             />
