@@ -59,7 +59,7 @@ const ChatContainer = () => {
     }, [messages])
 
     return selectedUser ? (
-        <div className="relative h-full flex flex-col">
+        <div className="relative h-full flex flex-col overflow-x-scroll">
 
             {/* Header */}
             <div className="flex items-center gap-3 py-3 mx-4 border-b border-stone-500">
@@ -115,7 +115,7 @@ const ChatContainer = () => {
             </div>
 
             {/* Send Message Bar */}
-            <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3 bg-black/40 backdrop-blur">
+            <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3  backdrop-blur bg-black">
                 <div className="flex-1 flex items-center bg-gray-100/12 px-3 rounded-full">
                     <input
                         onKeyDown={(e) => e.key == "Enter" ? handleSendMessage(e) : null}
